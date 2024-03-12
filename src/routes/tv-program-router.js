@@ -1,13 +1,15 @@
 const express = require("express")
-const TvProgramController = require("../controllers/tv-program-controller")
+const MediasetTvProgramController = require("../controllers/tv-program-controller/mediaset-tv-program-controller")
 
 const router = express.Router()
-const tvProgramController = new TvProgramController()
+const mediasetTvProgramController = new MediasetTvProgramController()
 
 router.get("/", (req, res) => {
     res.send("This is the TV Programs API endpoint!")
 })
 
-router.get("/all", tvProgramController.getAllPrograms)
+const mediasetRouter = express.Router()
+mediasetRouter.get("/today/:channelId", mediasetTvProgramController.getTodayPrograms)
+router.use("/mediaset", mediasetRouter)
 
 module.exports = router
