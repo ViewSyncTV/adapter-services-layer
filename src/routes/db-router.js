@@ -8,6 +8,9 @@ router.get("/", (req, res) => {
     res.send("This is the DB endpoint!")
 })
 
-router.get("/all", dbController.getAllPrograms)
+const tvProgramRouter = express.Router()
+tvProgramRouter.get("/get-last-update", dbController.getLastTvProgramUpdate)
+tvProgramRouter.post("/insert", dbController.insertTvProgram)
+router.use("/tv-program", tvProgramRouter)
 
 module.exports = router
