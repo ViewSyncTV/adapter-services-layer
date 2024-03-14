@@ -1,4 +1,5 @@
 const db = require("../managers/db-manager")
+const { getTodayRangeInEpoch } = require("../utils/utils")
 
 class DbController {
     async getLastTvProgramUpdate(req, res) {
@@ -12,8 +13,8 @@ class DbController {
 
             req.log.info("Db response is OK")
 
-            const lastUpdate = data !== null ? data[0].tv_program_get_last_updatea : null
-            res.send({ data: { last_update: lastUpdate } })
+            const lastUpdate = data !== null ? data : null
+            res.send({ data: lastUpdate })
         } catch (error) {
             req.log.error(`Error getting last TV program update: ${error.message}`)
             res.status(500).send({ error: { message: "Error getting last TV program update" } })
@@ -23,8 +24,6 @@ class DbController {
     async insertTvProgram(req, res) {
         try {
             const tvProgramData = req.body
-
-            req.log.info(tvProgramData)
 
             req.log.info("Inserting TV program into the database")
 
@@ -42,6 +41,29 @@ class DbController {
         } catch (error) {
             req.log.error(`Error inserting TV program: ${error.message}`)
             res.status(500).send({ error: { message: "Error inserting TV program" } })
+        }
+    }
+
+    async getTodayTvProgram(req, res) {
+        try {
+            req.log.info("Getting today's TV program from the database")
+
+            const { startDate, endDate } = getTodayRangeInEpoch()
+            const { data, error } = await db.rpc("tv_program_in_range_get", {
+                start_time_range: startDate,
+                end_time_range: endDate,
+            })
+
+            if (error) {
+                req.log.error(error)
+                throw new Error(error.message)
+            }
+
+            req.log.info("Db response is OK")
+            res.send({ data: data })
+        } catch (error) {
+            req.log.error(`Error getting today's TV program: ${error.message}`)
+            res.status(500).send({ error: { message: "Error getting today's TV program" } })
         }
     }
 }
