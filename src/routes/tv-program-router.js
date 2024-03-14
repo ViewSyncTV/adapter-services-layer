@@ -1,5 +1,5 @@
 const express = require("express")
-const MediasetTvProgramController = require("../controllers/tv-program-controller/mediaset-tv-program-controller")
+const MediasetTvProgramController = require("../controllers/tv-program-controllers/mediaset-tv-program-controller")
 
 const router = express.Router()
 const mediasetTvProgramController = new MediasetTvProgramController()
@@ -9,7 +9,7 @@ router.get("/", (req, res) => {
 })
 
 const mediasetRouter = express.Router()
-mediasetRouter.get("/today/:channelId", mediasetTvProgramController.getTodayPrograms)
+mediasetRouter.get("/today/:channelId", mediasetTvProgramController.getTodayProgramsForChannel)
 router.use("/mediaset", mediasetRouter)
 
 module.exports = router

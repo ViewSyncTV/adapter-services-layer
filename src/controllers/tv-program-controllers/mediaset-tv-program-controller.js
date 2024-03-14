@@ -10,7 +10,7 @@ function dateToEpoch(date) {
 }
 
 class MediasetTvProgramController {
-    async getTodayPrograms(req, res) {
+    async getTodayProgramsForChannel(req, res) {
         try {
             const today = new Date()
             const startDate = dateToEpoch(today)
@@ -27,10 +27,13 @@ class MediasetTvProgramController {
             url = url.replace("{endDate}", endDate)
             url = url.replace("{channelId}", channelId)
 
+            req.log.info(`Calling Mediaset API: ${url}`)
+
             const response = await axios.get(url)
 
             if (response.status == 200 && response.data.isOk == true) {
-                res.send(response.data.response)
+                req.log.info("Mediaset API response is OK")
+                res.send({ data: response.data.response})
             } else {
                 throw new Error("Bad response from Mediaset API")
             }
