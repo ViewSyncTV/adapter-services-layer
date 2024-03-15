@@ -1,5 +1,5 @@
 const db = require("../managers/db-manager")
-const { getTodayRangeInEpoch } = require("../utils/utils")
+const { getTodayRangeInISOString } = require("../utils/utils")
 
 class DbController {
     async getLastTvProgramUpdate(req, res) {
@@ -48,7 +48,7 @@ class DbController {
         try {
             req.log.info("Getting today's TV program from the database")
 
-            const { startDate, endDate } = getTodayRangeInEpoch()
+            const { startDate, endDate } = getTodayRangeInISOString()
             const { data, error } = await db.rpc("tv_program_in_range_get", {
                 start_time_range: startDate,
                 end_time_range: endDate,
