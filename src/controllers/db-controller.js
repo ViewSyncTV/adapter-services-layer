@@ -66,6 +66,44 @@ class DbController {
             res.status(500).send({ error: { message: "Error getting today's TV program" } })
         }
     }
+
+    async getRaiChannelList(req, res) {
+        try {
+            req.log.info("Getting Rai channel list from the database")
+
+            const { data, error } = await db.rpc("channel_list_get", { company_p: "Rai" })
+
+            if (error) {
+                req.log.error(error)
+                throw new Error(error.message)
+            }
+
+            req.log.info("Db response is OK")
+            res.send({ data: data })
+        } catch (error) {
+            req.log.error(`Error getting Rai channel list: ${error.message}`)
+            res.status(500).send({ error: { message: "Error getting Rai channel list" } })
+        }
+    }
+
+    async getMediasetChannelList(req, res) {
+        try {
+            req.log.info("Getting Mediaset channel list from the database")
+
+            const { data, error } = await db.rpc("channel_list_get", { company_p: "Mediaset" })
+
+            if (error) {
+                req.log.error(error)
+                throw new Error(error.message)
+            }
+
+            req.log.info("Db response is OK")
+            res.send({ data: data })
+        } catch (error) {
+            req.log.error(`Error getting Mediaset channel list: ${error.message}`)
+            res.status(500).send({ error: { message: "Error getting Mediaset channel list" } })
+        }
+    }
 }
 
 module.exports = DbController
