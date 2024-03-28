@@ -4,36 +4,39 @@ const RAI_BASE_URL = "https://www.raiplay.it/palinsesto/app"
 const RAI_PROGRAMS_RANGE_DATE_GET = `${RAI_BASE_URL}/{channelId}/{date}.json`
 
 class RaiTvProgramController {
-    async getTodayProgramsForChannel(req, res) {
+    async getWeekProgramsForChannel(req, res) {
         try {
-            // get today's date in the format DD-MM-YYYY
-            const today = new Date()
-            var todayStr = today.toLocaleString("it-IT", {
-                day: "2-digit",
-                month: "2-digit",
-                year: "numeric",
-            })
-            todayStr = todayStr.replace(/\//g, "-")
-
             const channelId = req.params.channelId
+            var programs = []
 
-            var url = RAI_PROGRAMS_RANGE_DATE_GET
-            url = url.replace("{date}", todayStr)
-            url = url.replace("{channelId}", channelId)
+            for (let i = 0; i < 7; i++) {
+                var day = new Date()
+                day.setDate(day.getDate() + i)
+                var dayStr = day.toLocaleString("it-IT", {
+                    day: "2-digit",
+                    month: "2-digit",
+                    year: "numeric",
+                })
+                dayStr = dayStr.replace(/\//g, "-")
 
-            req.log.info(`Calling Rai API: ${url}`)
+                var url = RAI_PROGRAMS_RANGE_DATE_GET
+                url = url.replace("{date}", dayStr)
+                url = url.replace("{channelId}", channelId)
 
-            const response = await axios.get(url)
+                req.log.info(`Calling Rai API: ${url}`)
 
-            if (response.status == 200) {
-                req.log.info("Rai API response is OK")
-                res.send({ data: response.data })
-            } else {
-                throw new Error("Bad response from Rai API")
+                const responseDay = await axios.get(url)
+
+                if (responseDay.status == 200) {
+                    programs = programs.concat(responseDay.data.events)
+                }
             }
+
+            req.log.info("Rai API response is OK")
+            res.send({ data: programs })
         } catch (error) {
-            req.log.error(`Error getting today's programs: ${error.message}`)
-            res.status(500).send({ error: { message: "Error getting today's programs" } })
+            req.log.error(`Error getting week's programs: ${error.message}`)
+            res.status(500).send({ error: { message: "Error getting week's programs" } })
         }
     }
 }

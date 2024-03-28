@@ -1,35 +1,39 @@
 const axios = require("axios")
-const { getTodayRangeInEpoch } = require("../../utils/utils")
+const { getWeekStartDatesInEpoch } = require("../../utils/utils")
 
 const MEDIASET_BASE_URL =
     "https://api-ott-prod-fe.mediaset.net/PROD/play/feed/allListingFeedEpg/v2.0?"
 const MEDIASET_PROGRAMS_RANGE_DATE_GET = `${MEDIASET_BASE_URL}byListingTime={startDate}~{endDate}&byCallSign={channelId}`
 
 class MediasetTvProgramController {
-    async getTodayProgramsForChannel(req, res) {
+    async getWeekProgramsForChannel(req, res) {
         try {
-            const { startDate, endDate } = getTodayRangeInEpoch()
+            var programs = []
 
-            const channelId = req.params.channelId
-            var url = MEDIASET_PROGRAMS_RANGE_DATE_GET
+            for (let startDate of getWeekStartDatesInEpoch()) {
+                const endDate = (parseInt(startDate) + 86400000).toString()
 
-            url = url.replace("{startDate}", startDate)
-            url = url.replace("{endDate}", endDate)
-            url = url.replace("{channelId}", channelId)
+                const channelId = req.params.channelId
+                var url = MEDIASET_PROGRAMS_RANGE_DATE_GET
 
-            req.log.info(`Calling Mediaset API: ${url}`)
+                url = url.replace("{startDate}", startDate)
+                url = url.replace("{endDate}", endDate)
+                url = url.replace("{channelId}", channelId)
 
-            const response = await axios.get(url)
+                req.log.info(`Calling Mediaset API: ${url}`)
+                const response = await axios.get(url)
 
-            if (response.status == 200 && response.data.isOk == true) {
-                req.log.info("Mediaset API response is OK")
-                res.send({ data: response.data.response })
-            } else {
-                throw new Error("Bad response from Mediaset API")
+                if (response.status == 200 && response.data.isOk == true) {
+                    programs = programs.concat(response.data.response.entries)
+                }
             }
+
+            req.log.info(programs)
+            req.log.info("Mediaset API response is OK")
+            res.send({ data: programs })
         } catch (error) {
-            req.log.error(`Error getting today's programs: ${error.message}`)
-            res.status(500).send({ error: { message: "Error getting today's programs" } })
+            req.log.error(`Error getting week's programs: ${error.message}`)
+            res.status(500).send({ error: { message: "Error getting week's programs" } })
         }
     }
 }
