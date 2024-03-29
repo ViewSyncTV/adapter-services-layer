@@ -29,8 +29,21 @@ function getWeekRangeInISOString() {
     return { startDate, endDate }
 }
 
+function getTodayRangeInISOString() {
+    const today = new Date().setHours(0, 0, 0, 0)
+    const startDate = new Date(today).toISOString().toLocaleString("it-IT")
+
+    const tomorrow = new Date()
+    tomorrow.setDate(tomorrow.getDate() + 1)
+    tomorrow.setHours(0, 0, 0, 0)
+    const endDate = tomorrow.toISOString().toLocaleString("it-IT")
+
+    return { startDate, endDate }
+}
+
 module.exports = {
     dateToEpoch,
     getWeekStartDatesInEpoch,
     getWeekRangeInISOString,
+    getTodayRangeInISOString,
 }
