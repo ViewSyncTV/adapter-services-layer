@@ -28,7 +28,6 @@ class MediasetTvProgramController {
                 }
             }
 
-            req.log.info(programs)
             req.log.info("Mediaset API response is OK")
             res.send({ data: programs })
         } catch (error) {
