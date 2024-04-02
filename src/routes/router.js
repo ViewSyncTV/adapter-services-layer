@@ -7,5 +7,6 @@ router.all("/", (req, res) => {
 })
 router.use("/db", require("./db-router"))
 router.use("/tv-program", require("./tv-program-router"))
+router.use("/program-metadata", require("./program-metadata-router"))
 
 module.exports = router
