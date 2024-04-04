@@ -7,33 +7,28 @@ const MEDIASET_PROGRAMS_RANGE_DATE_GET = `${MEDIASET_BASE_URL}byListingTime={sta
 
 class MediasetTvProgramController {
     async getWeekProgramsForChannel(req, res) {
-        try {
-            var programs = []
+        var programs = []
 
-            for (let startDate of getWeekStartDatesInEpoch()) {
-                const endDate = (parseInt(startDate) + 86400000).toString()
+        for (let startDate of getWeekStartDatesInEpoch()) {
+            const endDate = (parseInt(startDate) + 86400000).toString()
 
-                const channelId = req.params.channelId
-                var url = MEDIASET_PROGRAMS_RANGE_DATE_GET
+            const channelId = req.params.channelId
+            var url = MEDIASET_PROGRAMS_RANGE_DATE_GET
 
-                url = url.replace("{startDate}", startDate)
-                url = url.replace("{endDate}", endDate)
-                url = url.replace("{channelId}", channelId)
+            url = url.replace("{startDate}", startDate)
+            url = url.replace("{endDate}", endDate)
+            url = url.replace("{channelId}", channelId)
 
-                req.log.info(`Calling Mediaset API: ${url}`)
-                const response = await axios.get(url)
+            req.log.info(`Calling Mediaset API: ${url}`)
+            const response = await axios.get(url)
 
-                if (response.status == 200 && response.data.isOk == true) {
-                    programs = programs.concat(response.data.response.entries)
-                }
+            if (response.status == 200 && response.data.isOk == true) {
+                programs = programs.concat(response.data.response.entries)
             }
-
-            req.log.info("Mediaset API response is OK")
-            res.send({ data: programs })
-        } catch (error) {
-            req.log.error(`Error getting week's programs: ${error.message}`)
-            res.status(500).send({ error: { message: "Error getting week's programs" } })
         }
+
+        req.log.info("Mediaset API response is OK")
+        res.send({ data: programs })
     }
 }
 
