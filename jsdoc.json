@@ -1,0 +1,29 @@
+{
+    "plugins": ["plugins/markdown"],
+    "recurseDepth": 10,
+    "opts": {
+        "destination": "./docs/",
+        "template": "node_modules/better-docs",
+        "recurse": true
+    },
+    "source": {
+        "include": ["app.js", "./src"],
+        "exclude": ["./node_modules", "./test", "./docs", "./coverage"],
+        "includePattern": ".+\\.js(doc|x)?$",
+        "excludePattern": "(^|\\/|\\\\)_"
+    },
+    "sourceType": "module",
+    "tags": {
+        "allowUnknownTags": true,
+        "dictionaries": ["jsdoc", "closure"]
+    },
+    "templates": {
+        "cleverLinks": false,
+        "monospaceLinks": false
+    },
+    "docdash": {
+        "sort": true,
+        "search": true,
+        "collapse": false
+    }
+}

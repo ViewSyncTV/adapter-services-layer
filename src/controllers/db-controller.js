@@ -4,14 +4,23 @@ const { getTodayRangeInISOString, getWeekRangeInISOString } = require("../utils/
 // eslint-disable-next-line no-unused-vars
 const Types = require("../types/types")
 
+// eslint-disable-next-line no-unused-vars
+const NameSpaces = require("../types/namespaces")
+
+/**
+ * Controller for the database
+ * @memberof NameSpaces.
+ */
 class DbController {
     /**
      * Get the last update date of the table TV Program on the database
+     * @function
      * @async
      * @param {Types.Request} req - The request object
      * @param {Types.Response} res - The response object
      * @returns {Promise<Types.ApiResponse<?string>>} The response object
      * @throws Will throw an error if the database response is an error
+     * @memberof NameSpaces.Controllers
      */
     async getLastTvProgramUpdate(req, res) {
         req.log.info("Getting last TV program update from the database")

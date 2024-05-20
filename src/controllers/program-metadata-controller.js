@@ -1,5 +1,11 @@
 const axios = require("axios")
 
+// eslint-disable-next-line no-unused-vars
+const Types = require("../types/types")
+
+// eslint-disable-next-line no-unused-vars
+const NameSpaces = require("../types/namespaces")
+
 const THE_MOVIE_DB_API_URL = "https://api.themoviedb.org/3"
 const THE_MOVIE_DB_API_KEY = process.env.THE_MOVIE_DB_API_KEY || ""
 
@@ -16,9 +22,21 @@ const headers = {
     },
 }
 
+/**
+ * Controller for the program metadata
+ * @memberof NameSpaces.Controllers
+ */
 class ProgramMetadataController {
     constructor() {}
 
+    /**
+     * Search movie by query
+     * @async
+     * @param {Types.Request} req - The request object
+     * @param {Types.Response} res - The response object
+     * @returns {Promise<Types.ApiResponse<any>>} The list of movies compatible with the query
+     * @throws Will throw an error if the request fails
+     */
     async searchMovies(req, res) {
         const query = req.params.query
         const adaptedQuery = encodeURIComponent(query)
@@ -32,6 +50,14 @@ class ProgramMetadataController {
         res.send({ data: response.data })
     }
 
+    /**
+     * Search tv show by query
+     * @async
+     * @param {Types.Request} req - The request object
+     * @param {Types.Response} res - The response object
+     * @returns {Promise<Types.ApiResponse<any>>} The list of tv shows compatible with the query
+     * @throws Will throw an error if the request fails
+     */
     async searchTvShows(req, res) {
         const query = req.params.query
         const adaptedQuery = encodeURIComponent(query)
@@ -45,6 +71,14 @@ class ProgramMetadataController {
         res.send({ data: response.data })
     }
 
+    /**
+     * Get movie details by id using the TMDB API
+     * @async
+     * @param {Types.Request} req - The request object
+     * @param {Types.Response} res - The response object
+     * @returns {Promise<Types.ApiResponse<any>>} The details of the movie
+     * @throws Will throw an error if the request fails
+     */
     async getMovieDetails(req, res) {
         const id = req.params.id
 
@@ -57,6 +91,14 @@ class ProgramMetadataController {
         res.send({ data: response.data })
     }
 
+    /**
+     * Get tv show details by id using the TMDB API
+     * @async
+     * @param {Types.Request} req - The request object
+     * @param {Types.Response} res - The response object
+     * @returns {Promise<Types.ApiResponse<any>>} The details of the tv show
+     * @throws Will throw an error if the request fails
+     */
     async getTvShowDetails(req, res) {
         const id = req.params.id
 
