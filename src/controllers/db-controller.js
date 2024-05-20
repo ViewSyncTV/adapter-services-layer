@@ -1,7 +1,18 @@
 const db = require("../managers/db-manager")
 const { getTodayRangeInISOString, getWeekRangeInISOString } = require("../utils/utils")
 
+// eslint-disable-next-line no-unused-vars
+const Types = require("../types/types")
+
 class DbController {
+    /**
+     * Get the last update date of the table TV Program on the database
+     * @async
+     * @param {Types.Request} req - The request object
+     * @param {Types.Response} res - The response object
+     * @returns {Promise<Types.ApiResponse<?string>>} The response object
+     * @throws Will throw an error if the database response is an error
+     */
     async getLastTvProgramUpdate(req, res) {
         req.log.info("Getting last TV program update from the database")
         const { data, error } = await db.rpc("tv_program_get_last_update")
@@ -12,11 +23,25 @@ class DbController {
 
         req.log.info("Db response is OK")
 
-        const lastUpdate = data !== null ? data : null
-        res.send({ data: lastUpdate })
+        /** @type {?string} */
+        const lastUpdate = data
+
+        /** @type {Types.ApiResponse<?string>} */
+        const response = { data: lastUpdate }
+
+        res.send(response)
     }
 
+    /**
+     * Insert a TV program into the database
+     * @async
+     * @param {Types.Request<Types.TvProgram[]>} req - The request object
+     * @param {Types.Response} res - The response object
+     * @returns {Promise<Types.ApiResponse<any>>} The response object
+     * @throws Will throw an error if the database response is an error
+     */
     async insertTvProgram(req, res) {
+        /** @type {Types.TvProgram[]} */
         const tvProgramData = req.body
 
         req.log.info("Inserting TV program into the database")
@@ -33,6 +58,14 @@ class DbController {
         res.send({ data: data })
     }
 
+    /**
+     * Get today's TV program from the database
+     * @async
+     * @param {Types.Request} req - The request object
+     * @param {Types.Response} res - The response object
+     * @returns {Promise<Types.ApiResponse<Types.TvProgram[]>>} The response object
+     * @throws Will throw an error if the database response is an error
+     */
     async getTodayTvProgram(req, res) {
         req.log.info("Getting today's TV program from the database")
 
@@ -46,10 +79,21 @@ class DbController {
             throw new Error(error.message)
         }
 
+        /** @type {Types.ApiResponse<Types.TvProgram[]>} */
+        const response = { data: data }
+
         req.log.info("Db response is OK")
-        res.send({ data: data })
+        res.send(response)
     }
 
+    /**
+     * Get week's TV programs from the database
+     * @async
+     * @param {Types.Request} req - The request object
+     * @param {Types.Response} res - The response object
+     * @returns {Promise<Types.ApiResponse<Types.TvProgram[]>>} The response object
+     * @throws Will throw an error if the database response is an error
+     */
     async getWeekTvProgram(req, res) {
         req.log.info("Getting week's TV program from the database")
 
@@ -63,10 +107,21 @@ class DbController {
             throw new Error(error.message)
         }
 
+        /** @type {Types.ApiResponse<Types.TvProgram[]>} */
+        const response = { data: data }
+
         req.log.info("Db response is OK")
-        res.send({ data: data })
+        res.send(response)
     }
 
+    /**
+     * Get the list of channels that Rai broadcasts
+     * @async
+     * @param {Types.Request} req - The request object
+     * @param {Types.Response} res - The response object
+     * @returns {Promise<Types.ApiResponse<Types.TvChannel>>} The response object
+     * @throws Will throw an error if the database response is an error
+     */
     async getRaiChannelList(req, res) {
         req.log.info("Getting Rai channel list from the database")
 
@@ -76,10 +131,21 @@ class DbController {
             throw new Error(error.message)
         }
 
+        /** @type {Types.ApiResponse<Types.TvChannel>} */
+        const response = { data: data }
+
         req.log.info("Db response is OK")
-        res.send({ data: data })
+        res.send(response)
     }
 
+    /**
+     * Get the list of channels that Mediaset broadcasts
+     * @async
+     * @param {Types.Request} req - The request object
+     * @param {Types.Response} res - The response object
+     * @returns {Promise<Types.ApiResponse<Types.TvChannel>>} The response object
+     * @throws Will throw an error if the database response is an error
+     */
     async getMediasetChannelList(req, res) {
         req.log.info("Getting Mediaset channel list from the database")
 
