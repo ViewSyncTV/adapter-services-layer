@@ -1,6 +1,6 @@
 const express = require("express")
 const logger = require("./src/middleware/logger")
-const {errorHandler} = require("./src/middleware/error-handler")
+const { errorHandler } = require("./src/middleware/error-handler")
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -10,6 +10,13 @@ app.use(express.json({ limit: "50mb" }))
 app.use(express.urlencoded({ limit: "50mb", extended: true }))
 
 app.use("/api", require("./src/routes/router"))
+
+/**
+ * Error handler for invalid requests
+ * @name InvalidRequest
+ * @route {GET} *
+ * @memberof Router
+ */
 app.use((req, res) => {
     res.status(404).json({
         error: {
@@ -20,4 +27,4 @@ app.use((req, res) => {
 
 app.use(errorHandler)
 
-app.listen(port, () => { })
+app.listen(port, () => {})
