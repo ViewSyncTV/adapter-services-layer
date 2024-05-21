@@ -15,16 +15,13 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '20.10'
+          node-version: '14'
 
       - name: Install dependencies
         run: npm install
 
-      - name: Build
-        uses: andstor/jsdoc-action@v1
-        with:
-          output_dir: ./docs
-          config_file: jsdoc.json
+      - name: Generate documentation
+        run: npm run docs
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
