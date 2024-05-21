@@ -1,9 +1,10 @@
 {
-    "plugins": ["plugins/markdown"],
+    "plugins": ["plugins/markdown", "jsdoc-route-plugin", "node_modules/better-docs/category"],
     "recurseDepth": 10,
     "opts": {
         "destination": "./docs/",
         "template": "node_modules/better-docs",
+        "readme": "README.md",
         "recurse": true
     },
     "source": {
@@ -14,16 +15,22 @@
     },
     "sourceType": "module",
     "tags": {
-        "allowUnknownTags": true,
+        "allowUnknownTags": ["category", "route"],
         "dictionaries": ["jsdoc", "closure"]
     },
     "templates": {
-        "cleverLinks": false,
-        "monospaceLinks": false
-    },
-    "docdash": {
-        "sort": true,
-        "search": true,
-        "collapse": false
+        "cleverLinks": true,
+        "monospaceLinks": true,
+        "better-docs": {
+            "name": "ViewSyncTv - Adapter Service Layer",
+            "css": "style.css",
+            "hideGenerator": false,
+            "navLinks": [
+                {
+                    "label": "Github",
+                    "href": "https://github.com/ViewSyncTV/adapter-services-layer"
+                }
+            ]
+        }
     }
 }

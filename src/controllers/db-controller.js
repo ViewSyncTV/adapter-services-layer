@@ -3,24 +3,25 @@ const { getTodayRangeInISOString, getWeekRangeInISOString } = require("../utils/
 
 // eslint-disable-next-line no-unused-vars
 const Types = require("../types/types")
-
 // eslint-disable-next-line no-unused-vars
-const NameSpaces = require("../types/namespaces")
+const Controllers = require("../namespaces/controllers")
 
 /**
- * Controller for the database
- * @memberof NameSpaces.
+ * Controller that handles the database operations
+ * @class
+ * @description Category
+ * @memberof Controllers
  */
 class DbController {
+
     /**
      * Get the last update date of the table TV Program on the database
      * @function
      * @async
      * @param {Types.Request} req - The request object
      * @param {Types.Response} res - The response object
-     * @returns {Promise<Types.ApiResponse<?string>>} The response object
+     * @returns {Promise<Types.ApiResponse<?string>>} The last update date of the TV program table
      * @throws Will throw an error if the database response is an error
-     * @memberof NameSpaces.Controllers
      */
     async getLastTvProgramUpdate(req, res) {
         req.log.info("Getting last TV program update from the database")
@@ -46,7 +47,7 @@ class DbController {
      * @async
      * @param {Types.Request<Types.TvProgram[]>} req - The request object
      * @param {Types.Response} res - The response object
-     * @returns {Promise<Types.ApiResponse<any>>} The response object
+     * @returns {Promise<Types.ApiResponse<any>>} Ok response or error
      * @throws Will throw an error if the database response is an error
      */
     async insertTvProgram(req, res) {
@@ -72,7 +73,7 @@ class DbController {
      * @async
      * @param {Types.Request} req - The request object
      * @param {Types.Response} res - The response object
-     * @returns {Promise<Types.ApiResponse<Types.TvProgram[]>>} The response object
+     * @returns {Promise<Types.ApiResponse<Types.TvProgram[]>>} The list of TV programs for today
      * @throws Will throw an error if the database response is an error
      */
     async getTodayTvProgram(req, res) {
@@ -100,7 +101,7 @@ class DbController {
      * @async
      * @param {Types.Request} req - The request object
      * @param {Types.Response} res - The response object
-     * @returns {Promise<Types.ApiResponse<Types.TvProgram[]>>} The response object
+     * @returns {Promise<Types.ApiResponse<Types.TvProgram[]>>} The list of TV programs for the week
      * @throws Will throw an error if the database response is an error
      */
     async getWeekTvProgram(req, res) {
@@ -128,7 +129,7 @@ class DbController {
      * @async
      * @param {Types.Request} req - The request object
      * @param {Types.Response} res - The response object
-     * @returns {Promise<Types.ApiResponse<Types.TvChannel>>} The response object
+     * @returns {Promise<Types.ApiResponse<Types.TvChannel[]>>} The list of Rai channels
      * @throws Will throw an error if the database response is an error
      */
     async getRaiChannelList(req, res) {
@@ -152,7 +153,7 @@ class DbController {
      * @async
      * @param {Types.Request} req - The request object
      * @param {Types.Response} res - The response object
-     * @returns {Promise<Types.ApiResponse<Types.TvChannel>>} The response object
+     * @returns {Promise<Types.ApiResponse<Types.TvChannel[]>>} The list of Mediaset channels
      * @throws Will throw an error if the database response is an error
      */
     async getMediasetChannelList(req, res) {

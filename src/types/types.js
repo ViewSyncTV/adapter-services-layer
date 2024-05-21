@@ -1,13 +1,14 @@
 const { Logger } = require("pino")
 const { Response, Request } = require("express")
-const NameSpaces = require("./namespaces")
+
+/** @namespace Types */
 
 /**
  * @template T
  * @typedef {Request} Request
  * @property {T} [body] - The body object
  * @property {Logger} log - The logger object
- * @memberof NameSpaces.Types
+ * @memberof Types
  */
 
 /**

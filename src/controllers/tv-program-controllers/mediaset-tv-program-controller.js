@@ -3,12 +3,17 @@ const { getWeekStartDatesInEpoch } = require("../../utils/utils")
 
 // eslint-disable-next-line no-unused-vars
 const Types = require("../../types/types")
+// eslint-disable-next-line no-unused-vars
+const Controllers = require("../../namespaces/controllers")
 
 const MEDIASET_BASE_URL =
     "https://api-ott-prod-fe.mediaset.net/PROD/play/feed/allListingFeedEpg/v2.0?"
 const MEDIASET_PROGRAMS_RANGE_DATE_GET = `${MEDIASET_BASE_URL}byListingTime={startDate}~{endDate}&byCallSign={channelId}`
 
-/** Controller for the Mediaset TV program */
+/**
+ * Controller that fetches all the informations abouth the Mediaset TV programs
+ * @memberof Controllers
+ */
 class MediasetTvProgramController {
     /**
      * Get week programs for a specific channel of the Mediaset list of channels

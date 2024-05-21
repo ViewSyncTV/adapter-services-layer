@@ -2,11 +2,16 @@ const axios = require("axios")
 
 // eslint-disable-next-line no-unused-vars
 const Types = require("../../types/types")
+// eslint-disable-next-line no-unused-vars
+const Controllers = require("../../namespaces/controllers")
 
 const RAI_BASE_URL = "https://www.raiplay.it/palinsesto/app"
 const RAI_PROGRAMS_RANGE_DATE_GET = `${RAI_BASE_URL}/{channelId}/{date}.json`
 
-/** Controller for the Rai TV program */
+/**
+ * Controller that fetches all the informations abouth the Rai TV programs
+ * @memberof Controllers
+ */
 class RaiTvProgramController {
     /**
      * Get week programs for a specific channel of the Rai list of channels
