@@ -15,7 +15,7 @@
     },
     "sourceType": "module",
     "tags": {
-        "allowUnknownTags": ["category", "route"],
+        "allowUnknownTags": true,
         "dictionaries": ["jsdoc", "closure"]
     },
     "templates": {
