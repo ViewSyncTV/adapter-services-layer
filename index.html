@@ -113,7 +113,31 @@
 
 
     <section>
-        <article><h1>data-service-layer</h1></article>
+        <article><h1>Data Service Layer</h1>
+<h2>Description</h2>
+<p>This is the lowest layer of our structure. It is responsible of managing the data and the connection to the database and to external apis.</p>
+<h2>Responsibilities</h2>
+<ul>
+<li>Manage the connection to the database</li>
+<li>Manage the connection to external apis</li>
+</ul>
+<h2>API</h2>
+<p>The data returned by this layer is a JSON object with the following structure:</p>
+<pre class="prettyprint source lang-json"><code>{
+    &quot;data&quot;: {
+        // The data requested
+    }
+}
+</code></pre>
+<p>In case of error:</p>
+<pre class="prettyprint source lang-json"><code>{
+    error: {
+        message: &quot;Error message&quot;,
+        code: ErrorCode
+    }
+}
+</code></pre>
+<p>The data is not modified in this layer, it is just returned as it is.</p></article>
     </section>
 
 
