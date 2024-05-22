@@ -7,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> src/utils/utils.js</title>
+  <title> src/routes/db-router/db-tv-program-router.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -89,7 +89,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>src/utils/utils.js</h1>
+                    <h1>src/routes/db-router/db-tv-program-router.js</h1>
                 </header>
                 
 
@@ -99,84 +99,151 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * This file contains utility functions that are used in the main application.
- * @namespace Utils
+ * Part of the database API that handles the data related to the TV programs
+ * @namespace API.Db.TvProgram
+ * @category API
+ * @subcategory Internal Resources
+ * @requires express
+ * @requires DbController
  */
+
+const express = require("express")
+const DbController = require("../../controllers/db-controller")
+const { asyncHandler } = require("../../middleware/error-handler")
+
+const dbController = new DbController()
+const router = express.Router()
 
 /**
- * Convert a date object to epoch time
- * @param {Date} date - The date to convert
- * @returns {string} The epoch time
- * @memberof Utils
+ * Get the date of the last update of the TV programs in the database
+ * @name GetLastUpdate
+ * @route {GET} /api/db/tv-program/get-last-update
+ * @memberof API.Db.TvProgram
+ * @example
+ * // Example of request
+ * GET /api/db/tv-program/get-last-update
+ *
+ * // Example of response
+ * {
+ *   "data": "2024-05-21T09:19:45.481962+00:00"
+ * }
  */
-function dateToEpoch(date) {
-    date.setHours(0, 0, 0, 0)
-    return date.getTime().toString().padEnd(13, "0")
-}
+router.get("/get-last-update", asyncHandler(dbController.getLastTvProgramUpdate))
 
 /**
- * Get the dates of every day of the next 7 days in epoch time
- * @returns {Array&lt;string>} The start dates of the week in epoch time
- * @memberof Utils
+ * Insert a list of TV programs in the database
+ * @name TvProgramsInsert
+ * @route {POST} /api/db/tv-program/insert
+ * @bodyparam {Array&lt;Types.TvProgram>} tvPrograms - The list of TV programs to insert
+ * @memberof API.Db.TvProgram
+ * @example
+  // Example of request
+ * POST /api/db/tv-program/insert
+ * Content-Type: application/json
+ *
+ * [
+ *   {
+ *     "title": "Example Show",
+ *     "description": "This is an example TV show.",
+ *     "category": "Drama",
+ *     "channel": "Example Channel",
+ *     "channel_id": "example-channel",
+ *     "start_time": "2024-05-22T19:00:00+00:00",
+ *     "end_time": "2024-05-22T20:00:00+00:00"
+ *   },
+ *   {
+ *     "title": "Another Show",
+ *     "description": "This is another example TV show.",
+ *     "category": "Comedy",
+ *     "channel": "Another Channel",
+ *     "channel_id": "another-channel",
+ *     "start_time": "2024-05-22T21:00:00+00:00",
+ *     "end_time": "2024-05-22T22:00:00+00:00"
+ *   }
+ * ]
  */
-function getWeekStartDatesInEpoch() {
-    var dataRanges = []
-
-    for (let i = 0; i &lt; 7; i++) {
-        const dayBegin = new Date()
-        dayBegin.setDate(dayBegin.getDate() + i)
-        const startDate = dateToEpoch(dayBegin)
-
-        dataRanges.push(startDate)
-    }
-
-    return dataRanges
-}
+router.post("/insert", asyncHandler(dbController.insertTvProgram))
 
 /**
- * Get the start and end date of the current week in ISO string format
- * @returns {object} The start and end date of the current week in ISO string format
- * @property {Date} startDate - The start date of the current week.
- * @property {Date} endDate - The end date of the current week.
- * @memberof Utils
+ * Get the TV programs of today
+ * @name TvProgramsTodayGet
+ * @route {GET} /api/db/tv-program/today
+ * @memberof API.Db.TvProgram
+ * @example
+ * // Example of request
+ * GET /api/db/tv-program/today
+ *
+ * // Example of response
+ * {
+ *   "data": [
+ *     {"id":305265,"title":"Sogni di gloria","description":"Con Giulia Nannini e Giorgiana Cristalli  Regia di Giovanna Romano A cura di Cecilia De Robertis e Linda Critelli","category":"RaiRadio2","channel":"","channel_id":"rai-radio-2","start_time":"2024-05-22T21:00:00+00:00","end_time":"2024-05-22T22:00:00+00:00"}
+ *     {"id":305263,"title":"Back2Back","description":"Con Ema Stokholma e Gino Castaldo Regia di Leonardo Carioti e Alessandro Provenzano A cura di Laura Zullo","category":"RaiRadio2","channel":"","channel_id":"rai-radio-2","start_time":"2024-05-22T19:00:00+00:00","end_time":"2024-05-22T20:00:00+00:00"},
+ *     ...
+ *   ]
+ * }
  */
-function getWeekRangeInISOString() {
-    const today = new Date().setHours(0, 0, 0, 0)
-    const startDate = new Date(today).toISOString().toLocaleString("it-IT")
-
-    const nextWeek = new Date()
-    nextWeek.setDate(nextWeek.getDate() + 7)
-    nextWeek.setHours(0, 0, 0, 0)
-    const endDate = nextWeek.toISOString().toLocaleString("it-IT")
-
-    return { startDate, endDate }
-}
+router.get("/today", asyncHandler(dbController.getTodayTvProgram))
 
 /**
- * Get the start and end date of today in ISO string format
- * @returns {object} The start and end date of today in ISO string format
- * @property {Date} startDate - The start date of today.
- * @property {Date} endDate - The end date of today.
- * @memberof Utils
+ * Get the TV Programs of the week
+ * @name TvProgramsWeekGet
+ * @route {GET} /api/db/tv-program/week
+ * @memberof API.Db.TvProgram
+ * // Example of request
+ * GET /api/db/tv-program/week
+ *
+ * // Example of response
+ * {
+ *   "data": [
+ *     {"id":305265,"title":"Sogni di gloria","description":"Con Giulia Nannini e Giorgiana Cristalli  Regia di Giovanna Romano A cura di Cecilia De Robertis e Linda Critelli","category":"RaiRadio2","channel":"","channel_id":"rai-radio-2","start_time":"2024-05-22T21:00:00+00:00","end_time":"2024-05-22T22:00:00+00:00"}
+ *     {"id":305263,"title":"Back2Back","description":"Con Ema Stokholma e Gino Castaldo Regia di Leonardo Carioti e Alessandro Provenzano A cura di Laura Zullo","category":"RaiRadio2","channel":"","channel_id":"rai-radio-2","start_time":"2024-05-22T19:00:00+00:00","end_time":"2024-05-22T20:00:00+00:00"},
+ *     ...
+ *   ]
+ * }
  */
-function getTodayRangeInISOString() {
-    const today = new Date().setHours(0, 0, 0, 0)
-    const startDate = new Date(today).toISOString().toLocaleString("it-IT")
+router.get("/week", asyncHandler(dbController.getWeekTvProgram))
 
-    const tomorrow = new Date()
-    tomorrow.setDate(tomorrow.getDate() + 1)
-    tomorrow.setHours(0, 0, 0, 0)
-    const endDate = tomorrow.toISOString().toLocaleString("it-IT")
+/**
+ * Get the list of the RAI channels
+ * @name ChannelsListGetRai
+ * @route {GET} /api/db/tv-program/rai-channel-list
+ * @memberof API.Db.TvProgram
+ * @example
+ * // Example of request
+ * GET /api/db/tv-program/rai-channel-list
+ *
+ * // Example of response
+ * {
+ *   "data": [
+ *     {"id":"rai-1", "description":"Rai1", "company":"Rai"},
+ *     {"id":"rai-2", "description":"Rai2", "company":"Rai"},
+ *     ...
+ *   ]
+ * }
+ */
+router.get("/rai-channel-list", asyncHandler(dbController.getRaiChannelList))
 
-    return { startDate, endDate }
-}
+/**
+ * Get the list of the Mediaset channels
+ * @name ChannelsListGetMediaset
+ * @route {GET} /api/db/tv-program/mediaset-channel-list
+ * @memberof API.Db.TvProgram
+ * @example
+ * // Example of request
+ * GET /api/db/tv-program/mediaset-channel-list
+ *
+ * // Example of response
+ * {
+ *   "data": [
+ *     {"id":"C5", "description":"Canale5", "company":"Mediaset"},
+ *     {"id":"I1", "description":"Italia1", "company":"Mediaset"},
+ *     ...
+ *   ]
+ * }
+ */
+router.get("/mediaset-channel-list", asyncHandler(dbController.getMediasetChannelList))
 
-module.exports = {
-    dateToEpoch,
-    getWeekStartDatesInEpoch,
-    getWeekRangeInISOString,
-    getTodayRangeInISOString,
-}
+module.exports = router
 </code></pre>
         </article>
     </section>

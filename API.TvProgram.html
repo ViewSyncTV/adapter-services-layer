@@ -79,7 +79,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Namespaces</h3><ul><li><a href="Controllers.html">Controllers</a></li><li><a href="ErrorHandler.html">ErrorHandler</a></li><li><a href="Logger.html">Logger</a></li><li><a href="Types.html">Types</a></li><li><a href="Utils.html">Utils</a></li></ul><h3>Classes</h3><ul><li><a href="Controllers.DbController.html">DbController</a></li><li><a href="Controllers.MediasetTvProgramController.html">MediasetTvProgramController</a></li><li><a href="Controllers.ProgramMetadataController.html">ProgramMetadataController</a></li><li><a href="Controllers.RaiTvProgramController.html">RaiTvProgramController</a></li></ul></div><div class="category"><h2>API</h2><h3>Namespaces</h3><ul><li><a href="Router.html">Router</a></li><li><a href="Router.Db.html">Db</a></li><li><a href="Router.Db.TvProgram.html">TvProgram</a></li><li><a href="Router.ProgramMetadata.html">ProgramMetadata</a></li><li><a href="Router.TvProgram.html">TvProgram</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Namespaces</h3><ul><li><a href="Controllers.html">Controllers</a></li><li><a href="ErrorHandler.html">ErrorHandler</a></li><li><a href="Logger.html">Logger</a></li><li><a href="Types.html">Types</a></li><li><a href="Utils.html">Utils</a></li></ul><h3>Classes</h3><ul><li><a href="Controllers.DbController.html">DbController</a></li><li><a href="Controllers.MediasetTvProgramController.html">MediasetTvProgramController</a></li><li><a href="Controllers.ProgramMetadataController.html">ProgramMetadataController</a></li><li><a href="Controllers.RaiTvProgramController.html">RaiTvProgramController</a></li></ul></div><div class="category"><h2>API</h2><h3>Namespaces</h3><ul><li><a href="API.html">API</a></li></ul><h3>Namespaces / Internal Resources</h3><ul><li><a href="API.Db.html">Db</a></li><li><a href="API.Db.TvProgram.html">TvProgram</a></li></ul><h3>Namespaces / External Resources</h3><ul><li><a href="API.ProgramMetadata.html">ProgramMetadata</a></li><li><a href="API.TvProgram.html">TvProgram</a></li></ul></div>
                 
             </nav>
         </div>
@@ -99,7 +99,7 @@
 <header>
     
         <h2>
-            <span class="ancestors"><a href="Router.html">Router</a><a href="Router.Db.html">.Db</a>.</span>TvProgram</h2>
+            <span class="ancestors"><a href="API.html">API</a>.</span>TvProgram</h2>
         
     
 </header>
@@ -145,9 +145,9 @@
 
     
         <p class="tag-source">
-            <a href="src_routes_db-router.js.html" class="button">View Source</a>
+            <a href="src_routes_tv-program-router.js.html" class="button">View Source</a>
             <span>
-                <a href="src_routes_db-router.js.html">src/routes/db-router.js</a>, <a href="src_routes_db-router.js.html#line30">line 30</a>
+                <a href="src_routes_tv-program-router.js.html">src/routes/tv-program-router.js</a>, <a href="src_routes_tv-program-router.js.html#line1">line 1</a>
             </span>
         </p>
     
@@ -183,15 +183,15 @@
             
                 <div class="member">
 
-<h4 class="name" id="ChannelsListGetMediaset">
-    <a class="href-link" href="#ChannelsListGetMediaset">#</a>
+<h4 class="name" id="MediasetTodayGet">
+    <a class="href-link" href="#MediasetTodayGet">#</a>
     
         
             <span class='tag'>route</span>
         
     
     <span class="code-name">
-        ChannelsListGetMediaset
+        MediasetTodayGet
     </span>
     
 </h4>
@@ -205,254 +205,11 @@
                             <thead><tr><th>Method</th><th class="last">Path</th></tr></thead>
                             <tr>
                             <td class="type">GET</td>
-                            <td class="name last">/api/db/tv-program/mediaset-channel-list</td>
+                            <td class="name last">/api/tv-program/mediaset/week/:channelId</td>
                             </tr>
                             </table>
-                            <p>Get the list of the Mediaset channels</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="src_routes_db-router.js.html" class="button">View Source</a>
-            <span>
-                <a href="src_routes_db-router.js.html">src/routes/db-router.js</a>, <a href="src_routes_db-router.js.html#line78">line 78</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-</div>
-            
-                <div class="member">
-
-<h4 class="name" id="ChannelsListGetRai">
-    <a class="href-link" href="#ChannelsListGetRai">#</a>
-    
-        
-            <span class='tag'>route</span>
-        
-    
-    <span class="code-name">
-        ChannelsListGetRai
-    </span>
-    
-</h4>
-
-
-
-
-<div class="description">
-    <h5>Route:</h5>
-                            <table class="params">
-                            <thead><tr><th>Method</th><th class="last">Path</th></tr></thead>
-                            <tr>
-                            <td class="type">GET</td>
-                            <td class="name last">/api/db/tv-program/rai-channel-list</td>
-                            </tr>
-                            </table>
-                            <p>Get the list of the RAI channels</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="src_routes_db-router.js.html" class="button">View Source</a>
-            <span>
-                <a href="src_routes_db-router.js.html">src/routes/db-router.js</a>, <a href="src_routes_db-router.js.html#line70">line 70</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-</div>
-            
-                <div class="member">
-
-<h4 class="name" id="GetLastUpdate">
-    <a class="href-link" href="#GetLastUpdate">#</a>
-    
-        
-            <span class='tag'>route</span>
-        
-    
-    <span class="code-name">
-        GetLastUpdate
-    </span>
-    
-</h4>
-
-
-
-
-<div class="description">
-    <h5>Route:</h5>
-                            <table class="params">
-                            <thead><tr><th>Method</th><th class="last">Path</th></tr></thead>
-                            <tr>
-                            <td class="type">GET</td>
-                            <td class="name last">/api/db/tv-program/get-last-update</td>
-                            </tr>
-                            </table>
-                            <p>Get the date of the last update of the TV programs in the database</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="src_routes_db-router.js.html" class="button">View Source</a>
-            <span>
-                <a href="src_routes_db-router.js.html">src/routes/db-router.js</a>, <a href="src_routes_db-router.js.html#line37">line 37</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-</div>
-            
-                <div class="member">
-
-<h4 class="name" id="TvProgramsInsert">
-    <a class="href-link" href="#TvProgramsInsert">#</a>
-    
-        
-            <span class='tag'>route</span>
-        
-    
-    <span class="code-name">
-        TvProgramsInsert
-    </span>
-    
-</h4>
-
-
-
-
-<div class="description">
-    <h5>Route:</h5>
-                            <table class="params">
-                            <thead><tr><th>Method</th><th class="last">Path</th></tr></thead>
-                            <tr>
-                            <td class="type">POST</td>
-                            <td class="name last">/api/db/tv-program/insert</td>
-                            </tr>
-                            </table>
-                            <p>Insert a list of TV programs in the database</p>
-                            <h5>Body Parameters:</h5>
+                            <p>Get the TV programs of the week for a specific Mediaset channel</p>
+                            <h5>Route Parameters:</h5>
           <table class="params">
             <thead>
               <tr>
@@ -464,11 +221,11 @@
               </tr>
             </thead>
             <tr>
-            <td class="name">tvPrograms</td>
-            <td class="type">Array.<Types.TvProgram></td>
+            <td class="name">:channelId</td>
+            <td class="type">string</td>
             
             
-            <td class="description last">The list of TV programs to insert</td>
+            <td class="description last">The id of the channel</td>
           </tr>
           </table>
 </div>
@@ -510,9 +267,9 @@
 
     
         <p class="tag-source">
-            <a href="src_routes_db-router.js.html" class="button">View Source</a>
+            <a href="src_routes_tv-program-router.js.html" class="button">View Source</a>
             <span>
-                <a href="src_routes_db-router.js.html">src/routes/db-router.js</a>, <a href="src_routes_db-router.js.html#line45">line 45</a>
+                <a href="src_routes_tv-program-router.js.html">src/routes/tv-program-router.js</a>, <a href="src_routes_tv-program-router.js.html#line32">line 32</a>
             </span>
         </p>
     
@@ -522,19 +279,35 @@
 
 
 
+    <h5>Example</h5>
+    
+    
+        <pre class="prettyprint"><code>// Example of request
+GET /api/tv-program/mediaset/week/C5
+
+// Example of response
+{
+ "data": [
+    // The response structure and fields are defined by the Mediaset API.
+    // Refer to the Mediaset API documentation for detailed information.
+  ]
+}</code></pre>
+    
+
+
 </div>
             
                 <div class="member">
 
-<h4 class="name" id="TvProgramsTodayGet">
-    <a class="href-link" href="#TvProgramsTodayGet">#</a>
+<h4 class="name" id="RaiTodayGet">
+    <a class="href-link" href="#RaiTodayGet">#</a>
     
         
             <span class='tag'>route</span>
         
     
     <span class="code-name">
-        TvProgramsTodayGet
+        RaiTodayGet
     </span>
     
 </h4>
@@ -548,10 +321,29 @@
                             <thead><tr><th>Method</th><th class="last">Path</th></tr></thead>
                             <tr>
                             <td class="type">GET</td>
-                            <td class="name last">/api/db/tv-program/today</td>
+                            <td class="name last">/api/tv-program/rai/week/:channelId</td>
                             </tr>
                             </table>
-                            <p>Get the TV programs of today</p>
+                            <p>Get the TV programs of the week for a specific Rai channel</p>
+                            <h5>Route Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                
+                
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tr>
+            <td class="name">:channelId</td>
+            <td class="type">string</td>
+            
+            
+            <td class="description last">The id of the channel</td>
+          </tr>
+          </table>
 </div>
 
 
@@ -591,9 +383,9 @@
 
     
         <p class="tag-source">
-            <a href="src_routes_db-router.js.html" class="button">View Source</a>
+            <a href="src_routes_tv-program-router.js.html" class="button">View Source</a>
             <span>
-                <a href="src_routes_db-router.js.html">src/routes/db-router.js</a>, <a href="src_routes_db-router.js.html#line54">line 54</a>
+                <a href="src_routes_tv-program-router.js.html">src/routes/tv-program-router.js</a>, <a href="src_routes_tv-program-router.js.html#line58">line 58</a>
             </span>
         </p>
     
@@ -603,19 +395,35 @@
 
 
 
+    <h5>Example</h5>
+    
+    
+        <pre class="prettyprint"><code>// Example of request
+GET /api/tv-program/rai/week/rai-1
+
+// Example of response
+{
+ "data": [
+    // The response structure and fields are defined by the Mediaset API.
+    // Refer to the Mediaset API documentation for detailed information.
+  ]
+}</code></pre>
+    
+
+
 </div>
             
                 <div class="member">
 
-<h4 class="name" id="TvProgramsWeekGet">
-    <a class="href-link" href="#TvProgramsWeekGet">#</a>
+<h4 class="name" id="Root">
+    <a class="href-link" href="#Root">#</a>
     
         
             <span class='tag'>route</span>
         
     
     <span class="code-name">
-        TvProgramsWeekGet
+        Root
     </span>
     
 </h4>
@@ -629,10 +437,10 @@
                             <thead><tr><th>Method</th><th class="last">Path</th></tr></thead>
                             <tr>
                             <td class="type">GET</td>
-                            <td class="name last">/api/db/tv-program/week</td>
+                            <td class="name last">/api/tv-program</td>
                             </tr>
                             </table>
-                            <p>Get the TV Programs of the week</p>
+                            <p>Base route of the TV Programs API</p>
 </div>
 
 
@@ -672,9 +480,9 @@
 
     
         <p class="tag-source">
-            <a href="src_routes_db-router.js.html" class="button">View Source</a>
+            <a href="src_routes_tv-program-router.js.html" class="button">View Source</a>
             <span>
-                <a href="src_routes_db-router.js.html">src/routes/db-router.js</a>, <a href="src_routes_db-router.js.html#line62">line 62</a>
+                <a href="src_routes_tv-program-router.js.html">src/routes/tv-program-router.js</a>, <a href="src_routes_tv-program-router.js.html#line20">line 20</a>
             </span>
         </p>
     

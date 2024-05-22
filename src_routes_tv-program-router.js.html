@@ -81,7 +81,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Namespaces</h3><ul><li><a href="Controllers.html">Controllers</a></li><li><a href="ErrorHandler.html">ErrorHandler</a></li><li><a href="Logger.html">Logger</a></li><li><a href="Types.html">Types</a></li><li><a href="Utils.html">Utils</a></li></ul><h3>Classes</h3><ul><li><a href="Controllers.DbController.html">DbController</a></li><li><a href="Controllers.MediasetTvProgramController.html">MediasetTvProgramController</a></li><li><a href="Controllers.ProgramMetadataController.html">ProgramMetadataController</a></li><li><a href="Controllers.RaiTvProgramController.html">RaiTvProgramController</a></li></ul></div><div class="category"><h2>API</h2><h3>Namespaces</h3><ul><li><a href="Router.html">Router</a></li><li><a href="Router.Db.html">Db</a></li><li><a href="Router.Db.TvProgram.html">TvProgram</a></li><li><a href="Router.ProgramMetadata.html">ProgramMetadata</a></li><li><a href="Router.TvProgram.html">TvProgram</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Namespaces</h3><ul><li><a href="Controllers.html">Controllers</a></li><li><a href="ErrorHandler.html">ErrorHandler</a></li><li><a href="Logger.html">Logger</a></li><li><a href="Types.html">Types</a></li><li><a href="Utils.html">Utils</a></li></ul><h3>Classes</h3><ul><li><a href="Controllers.DbController.html">DbController</a></li><li><a href="Controllers.MediasetTvProgramController.html">MediasetTvProgramController</a></li><li><a href="Controllers.ProgramMetadataController.html">ProgramMetadataController</a></li><li><a href="Controllers.RaiTvProgramController.html">RaiTvProgramController</a></li></ul></div><div class="category"><h2>API</h2><h3>Namespaces</h3><ul><li><a href="API.html">API</a></li></ul><h3>Namespaces / Internal Resources</h3><ul><li><a href="API.Db.html">Db</a></li><li><a href="API.Db.TvProgram.html">TvProgram</a></li></ul><h3>Namespaces / External Resources</h3><ul><li><a href="API.ProgramMetadata.html">ProgramMetadata</a></li><li><a href="API.TvProgram.html">TvProgram</a></li></ul></div>
                 
             </nav>
         </div>
@@ -99,8 +99,9 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * @namespace Router.TvProgram
+ * @namespace API.TvProgram
  * @category API
+ * @subcategory External Resources
  * @requires express
  */
 
@@ -110,7 +111,7 @@ const RaiTvProgramController = require("../controllers/tv-program-controllers/ra
 const { asyncHandler } = require("../middleware/error-handler")
 
 // eslint-disable-next-line no-unused-vars
-const Router = require("./router")
+const API = require("./router")
 
 const router = express.Router()
 const mediasetTvProgramController = new MediasetTvProgramController()
@@ -118,9 +119,9 @@ const raiTvProgramController = new RaiTvProgramController()
 
 /**
  * Base route of the TV Programs API
- * @name Base
+ * @name Root
  * @route {GET} /api/tv-program
- * @memberof Router.TvProgram
+ * @memberof API.TvProgram
  */
 router.get("/", (req, res) => {
     res.send("This is the TV Programs API endpoint!")
@@ -129,11 +130,22 @@ router.get("/", (req, res) => {
 const mediasetRouter = express.Router()
 
 /**
- * Get the TV programs of today for a specific Mediaset channel
+ * Get the TV programs of the week for a specific Mediaset channel
  * @name MediasetTodayGet
- * @route {GET} /api/tv-program/mediaset/today/:channelId
+ * @route {GET} /api/tv-program/mediaset/week/:channelId
  * @routeparam {string} :channelId - The id of the channel
- * @memberof Router.TvProgram
+ * @memberof API.TvProgram
+ * @example
+ * // Example of request
+ * GET /api/tv-program/mediaset/week/C5
+ *
+ * // Example of response
+ * {
+ *  "data": [
+ *     // The response structure and fields are defined by the Mediaset API.
+ *     // Refer to the Mediaset API documentation for detailed information.
+ *   ]
+ * }
  */
 mediasetRouter.get(
     "/week/:channelId",
@@ -144,11 +156,22 @@ router.use("/mediaset", mediasetRouter)
 const raiRouter = express.Router()
 
 /**
- * Get the TV programs of today for a specific Rai channel
+ * Get the TV programs of the week for a specific Rai channel
  * @name RaiTodayGet
- * @route {GET} /api/tv-program/rai/today/:channelId
+ * @route {GET} /api/tv-program/rai/week/:channelId
  * @routeparam {string} :channelId - The id of the channel
- * @memberof Router.TvProgram
+ * @memberof API.TvProgram
+ * @example
+ * // Example of request
+ * GET /api/tv-program/rai/week/rai-1
+ *
+ * // Example of response
+ * {
+ *  "data": [
+ *     // The response structure and fields are defined by the Mediaset API.
+ *     // Refer to the Mediaset API documentation for detailed information.
+ *   ]
+ * }
  */
 raiRouter.get("/week/:channelId", asyncHandler(raiTvProgramController.getWeekProgramsForChannel))
 router.use("/rai", raiRouter)

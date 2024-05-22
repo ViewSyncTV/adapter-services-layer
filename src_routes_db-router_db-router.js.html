@@ -7,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> src/routes/db-router.js</title>
+  <title> src/routes/db-router/db-router.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -81,7 +81,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Namespaces</h3><ul><li><a href="Controllers.html">Controllers</a></li><li><a href="ErrorHandler.html">ErrorHandler</a></li><li><a href="Logger.html">Logger</a></li><li><a href="Types.html">Types</a></li><li><a href="Utils.html">Utils</a></li></ul><h3>Classes</h3><ul><li><a href="Controllers.DbController.html">DbController</a></li><li><a href="Controllers.MediasetTvProgramController.html">MediasetTvProgramController</a></li><li><a href="Controllers.ProgramMetadataController.html">ProgramMetadataController</a></li><li><a href="Controllers.RaiTvProgramController.html">RaiTvProgramController</a></li></ul></div><div class="category"><h2>API</h2><h3>Namespaces</h3><ul><li><a href="Router.html">Router</a></li><li><a href="Router.Db.html">Db</a></li><li><a href="Router.Db.TvProgram.html">TvProgram</a></li><li><a href="Router.ProgramMetadata.html">ProgramMetadata</a></li><li><a href="Router.TvProgram.html">TvProgram</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Namespaces</h3><ul><li><a href="Controllers.html">Controllers</a></li><li><a href="ErrorHandler.html">ErrorHandler</a></li><li><a href="Logger.html">Logger</a></li><li><a href="Types.html">Types</a></li><li><a href="Utils.html">Utils</a></li></ul><h3>Classes</h3><ul><li><a href="Controllers.DbController.html">DbController</a></li><li><a href="Controllers.MediasetTvProgramController.html">MediasetTvProgramController</a></li><li><a href="Controllers.ProgramMetadataController.html">ProgramMetadataController</a></li><li><a href="Controllers.RaiTvProgramController.html">RaiTvProgramController</a></li></ul></div><div class="category"><h2>API</h2><h3>Namespaces</h3><ul><li><a href="API.html">API</a></li></ul><h3>Namespaces / Internal Resources</h3><ul><li><a href="API.Db.html">Db</a></li><li><a href="API.Db.TvProgram.html">TvProgram</a></li></ul><h3>Namespaces / External Resources</h3><ul><li><a href="API.ProgramMetadata.html">ProgramMetadata</a></li><li><a href="API.TvProgram.html">TvProgram</a></li></ul></div>
                 
             </nav>
         </div>
@@ -89,7 +89,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>src/routes/db-router.js</h1>
+                    <h1>src/routes/db-router/db-router.js</h1>
                 </header>
                 
 
@@ -99,91 +99,30 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * @namespace Router.Db
+ * This nampespace defines the routes for accessing the database
+ * @namespace API.Db
  * @category API
+ * @subcategory Internal Resources
  * @requires express
+ * @requires DbController
  */
 
 const express = require("express")
-const DbController = require("../controllers/db-controller")
-const { asyncHandler } = require("../middleware/error-handler")
-
-// eslint-disable-next-line no-unused-vars
-const Types = require("../types/types")
-
-const Router = require("./router")
+const DbController = require("../../controllers/db-controller")
 
 const router = express.Router()
 
-const dbController = new DbController()
-
 /**
  * Base route of the database API
- * @name Base
+ * @name Root
  * @route {GET} /api/db
- * @memberof Router.Db
+ * @memberof API.Db
  */
 router.get("/", (req, res) => {
     res.send("This is the Db endpoint!")
 })
 
-/**
- * @namespace Router.Db.TvProgram
- * @category API
- * @requires express
- */
-const tvProgramRouter = express.Router()
-
-/**
- * Get the date of the last update of the TV programs in the database
- * @name GetLastUpdate
- * @route {GET} /api/db/tv-program/get-last-update
- * @memberof Router.Db.TvProgram
- */
-tvProgramRouter.get("/get-last-update", asyncHandler(dbController.getLastTvProgramUpdate))
-
-/**
- * Insert a list of TV programs in the database
- * @name TvProgramsInsert
- * @route {POST} /api/db/tv-program/insert
- * @bodyparam {Array&lt;Types.TvProgram>} tvPrograms - The list of TV programs to insert
- * @memberof Router.Db.TvProgram
- */
-tvProgramRouter.post("/insert", asyncHandler(dbController.insertTvProgram))
-
-/**
- * Get the TV programs of today
- * @name TvProgramsTodayGet
- * @route {GET} /api/db/tv-program/today
- * @memberof Router.Db.TvProgram
- */
-tvProgramRouter.get("/today", asyncHandler(dbController.getTodayTvProgram))
-
-/**
- * Get the TV Programs of the week
- * @name TvProgramsWeekGet
- * @route {GET} /api/db/tv-program/week
- * @memberof Router.Db.TvProgram
- */
-tvProgramRouter.get("/week", asyncHandler(dbController.getWeekTvProgram))
-
-/**
- * Get the list of the RAI channels
- * @name ChannelsListGetRai
- * @route {GET} /api/db/tv-program/rai-channel-list
- * @memberof Router.Db.TvProgram
- */
-tvProgramRouter.get("/rai-channel-list", asyncHandler(dbController.getRaiChannelList))
-
-/**
- * Get the list of the Mediaset channels
- * @name ChannelsListGetMediaset
- * @route {GET} /api/db/tv-program/mediaset-channel-list
- * @memberof Router.Db.TvProgram
- */
-tvProgramRouter.get("/mediaset-channel-list", asyncHandler(dbController.getMediasetChannelList))
-
-router.use("/tv-program", tvProgramRouter)
+router.use("/tv-program", require("./db-tv-program-router"))
 
 module.exports = router
 </code></pre>
