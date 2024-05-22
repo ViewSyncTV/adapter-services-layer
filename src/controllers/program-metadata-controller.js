@@ -2,8 +2,6 @@ const axios = require("axios")
 
 // eslint-disable-next-line no-unused-vars
 const Types = require("../types/types")
-// eslint-disable-next-line no-unused-vars
-const Controllers = require("../namespaces/controllers")
 
 const THE_MOVIE_DB_API_URL = "https://api.themoviedb.org/3"
 const THE_MOVIE_DB_API_KEY = process.env.THE_MOVIE_DB_API_KEY || ""

@@ -1,6 +1,7 @@
 /**
- * @namespace Router.ProgramMetadata
+ * @namespace API.ProgramMetadata
  * @category API
+ * @subcategory External Resources
  * @requires express
  */
 
@@ -9,16 +10,16 @@ const ProgramMetadataController = require("../controllers/program-metadata-contr
 const { asyncHandler } = require("../middleware/error-handler")
 
 // eslint-disable-next-line no-unused-vars
-const Router = require("./router")
+const API = require("./router")
 
 const router = express.Router()
 const programMetadataController = new ProgramMetadataController()
 
 /**
  * Base route of the Metadata API
- * @name Base
+ * @name Root
  * @route {GET} /api/program-metadata
- * @memberof Router.ProgramMetadata
+ * @memberof API.ProgramMetadata
  */
 router.get("/", (req, res) => {
     res.send("This is the program metadata API endpoint!")
@@ -29,7 +30,26 @@ router.get("/", (req, res) => {
  * @name MovieSearch
  * @route {GET} /api/program-metadata/movie/search/:query
  * @routeparam {string} :query - The query to search for
- * @memberof Router.ProgramMetadata
+ * @memberof API.ProgramMetadata
+ * @example
+ * // Example of request
+ * GET /api/program-metadata/movie/search/joker
+ *
+ * // Example of response
+ * {
+ *   "data":
+ *    {
+ *      "page":1,
+ *      "results":[
+ *        // List of tv-shows
+ *        // The response structure and fields are defined by the TMDB API.
+ *        // Refer to the TMDB API documentation for detailed information.
+ *      ],
+ *      "total_pages":1,
+ *      "total_results":2
+ *    }
+ * }
+ * @see {@link https://developers.themoviedb.org/reference/search-movie|TMDB API Documentation}
  */
 router.get("/movie/search/:query", asyncHandler(programMetadataController.searchMovies))
 
@@ -38,7 +58,26 @@ router.get("/movie/search/:query", asyncHandler(programMetadataController.search
  * @name TvShowSearch
  * @route {GET} /api/program-metadata/tv-show/search/:query
  * @routeparam {string} :query - The query to search for
- * @memberof Router.ProgramMetadata
+ * @memberof API.ProgramMetadata
+ * @example
+ * // Example of request
+ * GET /api/program-metadata/tv-show/search/breaking+bad
+ *
+ * // Example of response
+ * {
+ *   "data":
+ *    {
+ *      "page":1,
+ *      "results":[
+ *        // List of tv-shows
+ *        // The response structure and fields are defined by the TMDB API.
+ *        // Refer to the TMDB API documentation for detailed information.
+ *      ],
+ *      "total_pages":1,
+ *      "total_results":2
+ *    }
+ * }
+ * @see {@link https://developers.themoviedb.org/reference/search-tv|TMDB API Documentation}
  */
 router.get("/tv-show/search/:query", asyncHandler(programMetadataController.searchTvShows))
 
@@ -47,7 +86,19 @@ router.get("/tv-show/search/:query", asyncHandler(programMetadataController.sear
  * @name MovieDetails
  * @route {GET} /api/program-metadata/movie/:id
  * @routeparam {string} :id - The id of the movie
- * @memberof Router.ProgramMetadata
+ * @memberof API.ProgramMetadata
+ * @example
+ * // Example of request
+ * GET /api/program-metadata/movie/123
+ *
+ * // Example of response
+ * {
+ *   "data": {
+ *     // The response structure and fields are defined by the TMDB API.
+ *     // Refer to the TMDB API documentation for detailed information.
+ *   }
+ * }
+ * @see {@link https://developer.themoviedb.org/reference/movie-details|TMDB API Documentation}
  */
 router.get("/movie/:id", asyncHandler(programMetadataController.getMovieDetails))
 
@@ -56,7 +107,19 @@ router.get("/movie/:id", asyncHandler(programMetadataController.getMovieDetails)
  * @name TvShowDetails
  * @route {GET} /api/program-metadata/tv-show/:id
  * @routeparam {string} :id - The id of the tv-show
- * @memberof Router.ProgramMetadata
+ * @memberof API.ProgramMetadata
+ * @example
+ * // Example of request
+ * GET /api/program-metadata/tv-show/123
+ *
+ * // Example of response
+ * {
+ *   "data": {
+ *     // The response structure and fields are defined by the TMDB API.
+ *     // Refer to the TMDB API documentation for detailed information.
+ *   }
+ * }
+ * @see {@link https://developer.themoviedb.org/reference/tv-series-details|TMDB API Documentation}
  */
 router.get("/tv-show/:id", asyncHandler(programMetadataController.getTvShowDetails))
 

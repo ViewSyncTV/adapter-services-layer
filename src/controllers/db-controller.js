@@ -3,8 +3,6 @@ const { getTodayRangeInISOString, getWeekRangeInISOString } = require("../utils/
 
 // eslint-disable-next-line no-unused-vars
 const Types = require("../types/types")
-// eslint-disable-next-line no-unused-vars
-const Controllers = require("../namespaces/controllers")
 
 /**
  * Controller that handles the database operations
@@ -13,7 +11,6 @@ const Controllers = require("../namespaces/controllers")
  * @memberof Controllers
  */
 class DbController {
-
     /**
      * Get the last update date of the table TV Program on the database
      * @function

@@ -1,6 +1,7 @@
 /**
- * @namespace Router.TvProgram
+ * @namespace API.TvProgram
  * @category API
+ * @subcategory External Resources
  * @requires express
  */
 
@@ -10,7 +11,7 @@ const RaiTvProgramController = require("../controllers/tv-program-controllers/ra
 const { asyncHandler } = require("../middleware/error-handler")
 
 // eslint-disable-next-line no-unused-vars
-const Router = require("./router")
+const API = require("./router")
 
 const router = express.Router()
 const mediasetTvProgramController = new MediasetTvProgramController()
@@ -18,9 +19,9 @@ const raiTvProgramController = new RaiTvProgramController()
 
 /**
  * Base route of the TV Programs API
- * @name Base
+ * @name Root
  * @route {GET} /api/tv-program
- * @memberof Router.TvProgram
+ * @memberof API.TvProgram
  */
 router.get("/", (req, res) => {
     res.send("This is the TV Programs API endpoint!")
@@ -29,11 +30,22 @@ router.get("/", (req, res) => {
 const mediasetRouter = express.Router()
 
 /**
- * Get the TV programs of today for a specific Mediaset channel
+ * Get the TV programs of the week for a specific Mediaset channel
  * @name MediasetTodayGet
- * @route {GET} /api/tv-program/mediaset/today/:channelId
+ * @route {GET} /api/tv-program/mediaset/week/:channelId
  * @routeparam {string} :channelId - The id of the channel
- * @memberof Router.TvProgram
+ * @memberof API.TvProgram
+ * @example
+ * // Example of request
+ * GET /api/tv-program/mediaset/week/C5
+ *
+ * // Example of response
+ * {
+ *  "data": [
+ *     // The response structure and fields are defined by the Mediaset API.
+ *     // Refer to the Mediaset API documentation for detailed information.
+ *   ]
+ * }
  */
 mediasetRouter.get(
     "/week/:channelId",
@@ -44,11 +56,22 @@ router.use("/mediaset", mediasetRouter)
 const raiRouter = express.Router()
 
 /**
- * Get the TV programs of today for a specific Rai channel
+ * Get the TV programs of the week for a specific Rai channel
  * @name RaiTodayGet
- * @route {GET} /api/tv-program/rai/today/:channelId
+ * @route {GET} /api/tv-program/rai/week/:channelId
  * @routeparam {string} :channelId - The id of the channel
- * @memberof Router.TvProgram
+ * @memberof API.TvProgram
+ * @example
+ * // Example of request
+ * GET /api/tv-program/rai/week/rai-1
+ *
+ * // Example of response
+ * {
+ *  "data": [
+ *     // The response structure and fields are defined by the Mediaset API.
+ *     // Refer to the Mediaset API documentation for detailed information.
+ *   ]
+ * }
  */
 raiRouter.get("/week/:channelId", asyncHandler(raiTvProgramController.getWeekProgramsForChannel))
 router.use("/rai", raiRouter)

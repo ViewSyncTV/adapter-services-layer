@@ -3,8 +3,6 @@ const { getWeekStartDatesInEpoch } = require("../../utils/utils")
 
 // eslint-disable-next-line no-unused-vars
 const Types = require("../../types/types")
-// eslint-disable-next-line no-unused-vars
-const Controllers = require("../../namespaces/controllers")
 
 const MEDIASET_BASE_URL =
     "https://api-ott-prod-fe.mediaset.net/PROD/play/feed/allListingFeedEpg/v2.0?"
