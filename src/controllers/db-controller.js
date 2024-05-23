@@ -7,7 +7,6 @@ const Types = require("../types/types")
 /**
  * Controller that handles the database operations
  * @class
- * @description Category
  * @memberof Controllers
  */
 class DbController {
