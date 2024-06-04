@@ -164,6 +164,84 @@ class DbController {
         req.log.info("Db response is OK")
         res.send({ data: data })
     }
+
+    /**
+     * Get the list of favorite Tv programs for the user.
+     * @async
+     * @param {Types.Request} req - The request object
+     * @param {Types.Response} res - The response object
+     * @returns {Promise<Types.ApiResponse<Types.Favorite[]>>} The list of favorite Tv programs
+     * @throws Will throw an error if the request fails
+     */
+    async getFavorites(req, res) {
+        req.log.info("Getting favorite TV programs from the database")
+        const user_mail = req.params.userMail
+
+        const { data, error } = await db.rpc("favorite_get", { p_user_mail: user_mail })
+
+        if (error) {
+            throw new Error(error.message)
+        }
+
+        req.log.info("Db response is OK")
+        res.send({ data: data })
+    }
+
+    /**
+     * Add a Tv program to the user's favorites.
+     * @async
+     * @param {Types.Request} req - The request object
+     * @param {Types.Response} res - The response object
+     * @returns {Promise<Types.ApiResponse>} The response
+     * @throws Will throw an error if the request fails
+     */
+    async addFavorite(req, res) {
+        req.log.info("Adding TV program to favorites")
+        const user_mail = req.body.user_email
+        const movie_id = req.body.movie_id || null
+        const tvshow_id = req.body.tvshow_id || null
+
+        const { data, error } = await db.rpc("favorite_insert", {
+            p_user_mail: user_mail,
+            p_movie_id: movie_id,
+            p_tvshow_id: tvshow_id,
+        })
+
+        if (error) {
+            throw new Error(error.message)
+        }
+
+        req.log.info("Db response is OK")
+        res.send({ data: data })
+    }
+
+    /**
+     * Remove a Tv program from the user's favorites.
+     * @async
+     * @param {Types.Request} req - The request object
+     * @param {Types.Response} res - The response object
+     * @returns {Promise<Types.ApiResponse>} The response
+     * @throws Will throw an error if the request fails
+     */
+    async removeFavorite(req, res) {
+        req.log.info("Removing TV program from favorites")
+        const user_mail = req.params.userMail
+
+        const movie_id = req.body.movie_id || null
+        const tvshow_id = req.body.tvshow_id || null
+        const { data, error } = await db.rpc("favorite_remove", {
+            p_user_mail: user_mail,
+            p_movie_id: movie_id,
+            p_tvshow_id: tvshow_id,
+        })
+
+        if (error) {
+            throw new Error(error.message)
+        }
+
+        req.log.info("Db response is OK")
+        res.send({ data: data })
+    }
 }
 
 module.exports = DbController
