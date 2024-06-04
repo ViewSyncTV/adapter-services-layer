@@ -297,7 +297,7 @@ class DbController {
      */
     async addFavorite(req, res) {
         req.log.info("Adding TV program to favorites")
-        const user_mail = req.body.userMail
+        const user_mail = req.body.user_email
         const movie_id = req.body.movie_id || null
         const tvshow_id = req.body.tvshow_id || null
 
