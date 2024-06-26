@@ -230,6 +230,7 @@ class DbController {
         const user_mail = req.body.user_email
         const movie_id = req.body.movie_id || null
         const tvshow_id = req.body.tvshow_id || null
+        console.log(req)
 
         const { data, error } = await db.rpc("favorite_remove", {
             p_user_mail: user_mail,
