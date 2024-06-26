@@ -222,6 +222,54 @@ router.get("/movie/:id", asyncHandler(programMetadataController.getMovieDetails)
  */
 router.get("/tv-show/:id", asyncHandler(programMetadataController.getTvShowDetails))
 
+/**
+ * Get the recommendations of a tv-show given its id (the id is the one from the TMDB API)
+ * @name TvShowRecommendations
+ * @route {GET} /api/program-metadata/tv-show/recommendations/:id
+ * @routeparam {string} :id - The id of the tv-show
+ * @memberof API.ProgramMetadata
+ * @example
+ * // Example of request
+ * GET /api/program-metadata/tv-show/recommendations/123
+ *
+ * // Example of response
+ * {
+ *    "data": {
+ *    "page": 1,
+ *    "results": [...],
+ *    "total_pages": 1,
+ *    "total_results": 1,
+ *  }
+ */
+router.get(
+    "/tv-show/recommendations/:id",
+    asyncHandler(programMetadataController.getTvShowRecommendations),
+)
+
+
+/**
+ * Get the recommendations of a movie given its id (the id is the one from the TMDB API)
+ * @name MovieRecommendations
+ * @route {GET} /api/program-metadata/movie/recommendations/:id
+ * @routeparam {string} :id - The id of the movie
+ * @memberof API.ProgramMetadata
+ * @example
+ * // Example of request
+ * GET /api/program-metadata/movie/recommendations/123
+ *
+ * // Example of response
+ * {
+ *    "data": {
+ *    "page": 1,
+ *    "results": [...],
+ *    "total_pages": 1,
+ *    "total_results": 1,
+ *  }
+ */
+router.get(
+    "/movie/recommendations/:id",
+    asyncHandler(programMetadataController.getMovieRecommendations),
+)
 module.exports = router
 </code></pre>
         </article>
