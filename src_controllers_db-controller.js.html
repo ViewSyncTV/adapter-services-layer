@@ -300,11 +300,13 @@ class DbController {
         const user_mail = req.body.user_email
         const movie_id = req.body.movie_id || null
         const tvshow_id = req.body.tvshow_id || null
+        const title = req.body.title || null
 
         const { data, error } = await db.rpc("favorite_insert", {
             p_user_mail: user_mail,
             p_movie_id: movie_id,
             p_tvshow_id: tvshow_id,
+            p_title: title
         })
 
         if (error) {
@@ -325,10 +327,10 @@ class DbController {
      */
     async removeFavorite(req, res) {
         req.log.info("Removing TV program from favorites")
-        const user_mail = req.params.userMail
-
+        const user_mail = req.body.user_email
         const movie_id = req.body.movie_id || null
         const tvshow_id = req.body.tvshow_id || null
+
         const { data, error } = await db.rpc("favorite_remove", {
             p_user_mail: user_mail,
             p_movie_id: movie_id,
