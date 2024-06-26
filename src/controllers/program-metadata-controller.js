@@ -9,6 +9,9 @@ const SEARCH_TV_SHOW = `${THE_MOVIE_DB_API_URL}/search/tv?query={query}&language
 const GET_MOVIE_DETAILS = `${THE_MOVIE_DB_API_URL}/movie/{id}?language=it-IT`
 const GET_TV_SHOW_DETAILS = `${THE_MOVIE_DB_API_URL}/tv/{id}?language=it-IT`
 
+const GET_MOVIE_RECOMMENDATIONS = `${THE_MOVIE_DB_API_URL}/movie/{id}/recommendations?language=it-IT`
+const GET_TV_SHOW_RECOMMENDATIONS = `${THE_MOVIE_DB_API_URL}/tv/{id}/recommendations?language=it-IT`
+
 const headers = {
     headers: {
         accept: "application/json",
@@ -97,6 +100,46 @@ class ProgramMetadataController {
         const id = req.params.id
 
         var url = GET_TV_SHOW_DETAILS.replace("{id}", id)
+        req.log.info(`Calling TMDB API: ${url}`)
+
+        const response = await axios.get(url, headers)
+
+        req.log.info("TMDB API response is OK")
+        res.send({ data: response.data })
+    }
+
+    /**
+     * Get tv show recommendations using the TMDB API
+     * @async
+     * @param {Types.Request} req - The request object
+     * @param {Types.Response} res - The response object
+     * @returns {Promise<Types.ApiResponse<any>>} The list of tv show getTvShowRecommendations
+     * @throws Will throw an error if the request fails
+     */
+    async getTvShowRecommendations(req, res) {
+        const id = req.params.id
+
+        var url = GET_TV_SHOW_RECOMMENDATIONS.replace("{id}", id)
+        req.log.info(`Calling TMDB API: ${url}`)
+
+        const response = await axios.get(url, headers)
+
+        req.log.info("TMDB API response is OK")
+        res.send({ data: response.data })
+    }
+
+    /**
+     * Get movie recommendations using the TMDB Api
+     * @async
+     * @param {Types.Request} req - The request object
+     * @param {Types.Response} res - The response object
+     * @returns {Promise<Types.ApiResponse<any>>} The list of movie recommendations
+     * @throws Will throw an error if the request fails
+     */
+    async getMovieRecommendations(req, res) {
+        const id = req.params.id
+
+        var url = GET_MOVIE_RECOMMENDATIONS.replace("{id}", id)
         req.log.info(`Calling TMDB API: ${url}`)
 
         const response = await axios.get(url, headers)
