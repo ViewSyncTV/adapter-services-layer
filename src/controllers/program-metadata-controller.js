@@ -12,6 +12,7 @@ const GET_TV_SHOW_DETAILS = `${THE_MOVIE_DB_API_URL}/tv/{id}?language=it-IT`
 const GET_MOVIE_RECOMMENDATIONS = `${THE_MOVIE_DB_API_URL}/movie/{id}/recommendations?language=it-IT`
 const GET_TV_SHOW_RECOMMENDATIONS = `${THE_MOVIE_DB_API_URL}/tv/{id}/recommendations?language=it-IT`
 
+
 const headers = {
     headers: {
         accept: "application/json",

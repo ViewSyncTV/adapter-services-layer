@@ -245,6 +245,81 @@ class DbController {
         req.log.info("Db response is OK")
         res.send({ data: data })
     }
+
+    /**
+     * Get the list of reminder Tv programs for the user.
+     * @async
+     * @param {Types.Request} req - The request object
+     * @param {Types.Response} res - The response object
+     * @returns {Promise<Types.ApiResponse<Types.Reminder[]>>} The list of reminder Tv programs
+     * @throws Will throw an error if the request fails
+     */
+    async getReminders(req, res) {
+        req.log.info("Getting reminder TV programs from the database")
+        const user_mail = req.params.userMail
+
+        const { data, error } = await db.rpc("reminder_get", { p_user_mail: user_mail })
+
+        if (error) {
+            throw new Error(error.message)
+        }
+
+        req.log.info("Db response is OK")
+        res.send({ data: data })
+    }
+
+    /**
+     * Add a Tv program to the user's reminders.
+     * @async
+     * @param {Types.Request} req - The request object
+     * @param {Types.Response} res - The response object
+     * @returns {Promise<Types.ApiResponse>} The response
+     * @throws Will throw an error if the request fails
+     */
+    async addReminders(req, res) {
+        req.log.info("Adding TV program to reminders")
+        const user_mail = req.body.user_email
+        const tvprogram_id = req.body.tvprogram_id|| null
+
+        const { data, error } = await db.rpc("reminder_insert", {
+            p_user_mail: user_mail,
+            p_tvprogram_id: tvprogram_id
+        })
+
+        if (error) {
+            throw new Error(error.message)
+        }
+
+        req.log.info("Db response is OK")
+        res.send({ data: data })
+    }
+
+    /**
+     * Remove a Tv program from the user's reminders.
+     * @async
+     * @param {Types.Request} req - The request object
+     * @param {Types.Response} res - The response object
+     * @returns {Promise<Types.ApiResponse>} The response
+     * @throws Will throw an error if the request fails
+     */
+    async removeReminders(req, res) {
+        req.log.info("Removing TV program from reminders")
+        const user_mail = req.body.user_email
+        const tvprogram_id = req.body.tvprogram_id || null
+        console.log(req)
+
+        const { data, error } = await db.rpc("reminder_remove", {
+            p_user_mail: user_mail,
+            p_tvprogram_id: tvprogram_id
+        })
+
+        if (error) {
+            throw new Error(error.message)
+        }
+
+        req.log.info("Db response is OK")
+        res.send({ data: data })
+    }
 }
 
 module.exports = DbController
