@@ -207,7 +207,7 @@ router.get("/favorites/:userMail", asyncHandler(dbController.getFavorites))
  *     "tvprogram_id": "12345"
  * }
  */
-router.post("/reminder", asyncHandler(dbController.addReminder))
+router.post("/reminder", asyncHandler(dbController.addReminders))
 
 /**
  * Remove a Tv program from the reminder list of the user.
@@ -222,7 +222,7 @@ router.post("/reminder", asyncHandler(dbController.addReminder))
  *    "tvprogram_id": "12345"
  * }
  */
-router.delete("/reminder", asyncHandler(dbController.removeReminder))
+router.delete("/reminder", asyncHandler(dbController.removeReminders))
 
 /**
  * Get the list of reminder Tv programs of the user.
